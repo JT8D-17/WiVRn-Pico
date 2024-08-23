@@ -10,4 +10,4 @@ export JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
 ./gradlew assembleStandardRelease
 
 
-cp "$(pwd)/build/outputs/apk/standard/release/WiVRn-standard-release.apk" "$(pwd)"
+cp "$(pwd)/build/outputs/apk/standard/release/WiVRn-Pico-standard-release.apk" "$(pwd)"
