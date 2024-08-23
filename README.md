@@ -1,5 +1,9 @@
 # WiVRn
 
+## NOTE: This is a testing fork of WiVRn that I'm trying to get going for my Pico4 VR headset
+
+&nbsp;
+
 [![License: GPL v3](images/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) ![CI](https://github.com/WiVRn/WiVRn/workflows/Build/badge.svg) ![Format](https://github.com/WiVRn/WiVRn/workflows/Format/badge.svg)
 
 <p align="center"><img src="images/wivrn.svg" width="180"></p>
