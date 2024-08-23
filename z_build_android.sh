@@ -11,3 +11,7 @@ export JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
 
 
 cp "$(pwd)/build/outputs/apk/standard/release/WiVRn-Pico-standard-release.apk" "$(pwd)"
+
+echo " "
+echo " "
+echo "Script done."
