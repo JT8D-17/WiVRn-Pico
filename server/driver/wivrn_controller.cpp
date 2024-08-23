@@ -53,7 +53,7 @@ enum wivrn_controller_input_index
 	WIVRN_CONTROLLER_THUMBSTICK,                         // /user/hand/XXXX/input/thumbstick/{x,y}
 	WIVRN_CONTROLLER_THUMBSTICK_CLICK,                   // /user/hand/XXXX/input/thumbstick/click
 	WIVRN_CONTROLLER_THUMBSTICK_TOUCH,                   // /user/hand/XXXX/input/thumbstick/touch
-	WIVRN_CONTROLLER_THUMBREST_TOUCH,                    // /user/hand/XXXX/input/thumbrest/touch
+	//WIVRN_CONTROLLER_THUMBREST_TOUCH,                    // /user/hand/XXXX/input/thumbrest/touch
 
 	WIVRN_CONTROLLER_INPUT_COUNT
 };
@@ -88,7 +88,7 @@ static const wivrn_to_wivrn_controller_input left_hand_bindings[] = {
 	{WIVRN_CONTROLLER_THUMBSTICK,       device_id::LEFT_THUMBSTICK_Y, wivrn_input_type::VEC2_Y},  // /user/hand/left/input/thumbstick/y
 	{WIVRN_CONTROLLER_THUMBSTICK_CLICK, device_id::LEFT_THUMBSTICK_CLICK, wivrn_input_type::BOOL},// /user/hand/left/input/thumbstick/click
 	{WIVRN_CONTROLLER_THUMBSTICK_TOUCH, device_id::LEFT_THUMBSTICK_TOUCH, wivrn_input_type::BOOL},// /user/hand/left/input/thumbstick/touch
-	{WIVRN_CONTROLLER_THUMBREST_TOUCH,  device_id::LEFT_THUMBREST_TOUCH, wivrn_input_type::BOOL}, // /user/hand/left/input/thumbrest/touch
+	//{WIVRN_CONTROLLER_THUMBREST_TOUCH,  device_id::LEFT_THUMBREST_TOUCH, wivrn_input_type::BOOL}, // /user/hand/left/input/thumbrest/touch
 };
 
 static const wivrn_to_wivrn_controller_input right_hand_bindings[] = {
@@ -103,7 +103,7 @@ static const wivrn_to_wivrn_controller_input right_hand_bindings[] = {
 	{WIVRN_CONTROLLER_THUMBSTICK,       device_id::RIGHT_THUMBSTICK_Y, wivrn_input_type::VEC2_Y},  // /user/hand/right/input/thumbstick/y
 	{WIVRN_CONTROLLER_THUMBSTICK_CLICK, device_id::RIGHT_THUMBSTICK_CLICK, wivrn_input_type::BOOL},// /user/hand/right/input/thumbstick/click
 	{WIVRN_CONTROLLER_THUMBSTICK_TOUCH, device_id::RIGHT_THUMBSTICK_TOUCH, wivrn_input_type::BOOL},// /user/hand/right/input/thumbstick/touch
-	{WIVRN_CONTROLLER_THUMBREST_TOUCH,  device_id::RIGHT_THUMBREST_TOUCH, wivrn_input_type::BOOL}, // /user/hand/right/input/thumbrest/touch
+	//{WIVRN_CONTROLLER_THUMBREST_TOUCH,  device_id::RIGHT_THUMBREST_TOUCH, wivrn_input_type::BOOL}, // /user/hand/right/input/thumbrest/touch
 };
 // clang-format on
 
@@ -111,14 +111,14 @@ static const size_t left_hand_bindings_count = ARRAY_SIZE(left_hand_bindings);
 static const size_t right_hand_bindings_count = ARRAY_SIZE(right_hand_bindings);
 
 static xrt_binding_input_pair simple_input_binding[] = {
-        {XRT_INPUT_SIMPLE_SELECT_CLICK, XRT_INPUT_TOUCH_TRIGGER_VALUE},
-        {XRT_INPUT_SIMPLE_MENU_CLICK, XRT_INPUT_TOUCH_MENU_CLICK},
-        {XRT_INPUT_SIMPLE_GRIP_POSE, XRT_INPUT_TOUCH_GRIP_POSE},
-        {XRT_INPUT_SIMPLE_AIM_POSE, XRT_INPUT_TOUCH_AIM_POSE},
+        {XRT_INPUT_SIMPLE_SELECT_CLICK, XRT_INPUT_PICO4_TRIGGER_VALUE},
+        {XRT_INPUT_SIMPLE_MENU_CLICK, XRT_INPUT_PICO4_MENU_CLICK},
+        {XRT_INPUT_SIMPLE_GRIP_POSE, XRT_INPUT_PICO4_GRIP_POSE},
+        {XRT_INPUT_SIMPLE_AIM_POSE, XRT_INPUT_PICO4_AIM_POSE},
 };
 
 static xrt_binding_output_pair simple_output_binding[] = {
-        {XRT_OUTPUT_NAME_SIMPLE_VIBRATION, XRT_OUTPUT_NAME_TOUCH_HAPTIC},
+        {XRT_OUTPUT_NAME_SIMPLE_VIBRATION, XRT_OUTPUT_NAME_PICO4_HAPTIC},
 };
 
 static xrt_binding_profile wivrn_binding_profiles[] = {
@@ -165,7 +165,7 @@ wivrn_controller::wivrn_controller(int hand_id,
 	base->set_output = wivrn_controller_set_output;
 	base->update_inputs = wivrn_controller_update_inputs;
 
-	base->name = XRT_DEVICE_TOUCH_CONTROLLER;
+	base->name = XRT_DEVICE_PICO4_CONTROLLER;
 	base->orientation_tracking_supported = true;
 	base->hand_tracking_supported = true;
 	base->position_tracking_supported = true;
@@ -180,7 +180,7 @@ wivrn_controller::wivrn_controller(int hand_id,
 #define SET_INPUT(NAME)                                                        \
 	do                                                                     \
 	{                                                                      \
-		inputs[WIVRN_CONTROLLER_##NAME].name = XRT_INPUT_TOUCH_##NAME; \
+		inputs[WIVRN_CONTROLLER_##NAME].name = XRT_INPUT_PICO4_##NAME; \
 		inputs[WIVRN_CONTROLLER_##NAME].active = true;                 \
 	} while (0)
 
@@ -207,14 +207,14 @@ wivrn_controller::wivrn_controller(int hand_id,
 	SET_INPUT(THUMBSTICK);
 	SET_INPUT(THUMBSTICK_CLICK);
 	SET_INPUT(THUMBSTICK_TOUCH);
-	SET_INPUT(THUMBREST_TOUCH);
+	//SET_INPUT(THUMBREST_TOUCH);
 
 	inputs[WIVRN_CONTROLLER_HAND_TRACKER].name = hand_id == 0 ? XRT_INPUT_GENERIC_HAND_TRACKING_LEFT : XRT_INPUT_GENERIC_HAND_TRACKING_RIGHT;
 	inputs[WIVRN_CONTROLLER_HAND_TRACKER].active = true;
 
 	output_count = 1;
 	outputs = &haptic_output;
-	haptic_output.name = XRT_OUTPUT_NAME_TOUCH_HAPTIC;
+	haptic_output.name = XRT_OUTPUT_NAME_PICO4_HAPTIC;
 
 	inputs_staging = inputs_array;
 
@@ -313,10 +313,10 @@ xrt_space_relation wivrn_controller::get_tracked_pose(xrt_input_name name, uint6
 	xrt_space_relation res;
 	switch (name)
 	{
-		case XRT_INPUT_TOUCH_AIM_POSE:
+		case XRT_INPUT_PICO4_AIM_POSE:
 			std::tie(extrapolation_time, res) = aim.get_at(at_timestamp_ns);
 			break;
-		case XRT_INPUT_TOUCH_GRIP_POSE:
+		case XRT_INPUT_PICO4_GRIP_POSE:
 			std::tie(extrapolation_time, res) = grip.get_at(at_timestamp_ns);
 			break;
 		default:
